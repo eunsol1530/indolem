@@ -55,7 +55,7 @@ def load_json(p, lower):
 
 
 def load_xml(p):
-    tree = ET.parse(p)
+    tree = ET.parse(p)  # @BUG_HERE_START
     root = tree.getroot()
     title, byline, abs, paras = [], [], [], []
     title_node = list(root.iter('hedline'))
@@ -199,7 +199,7 @@ def greedy_selection(doc_sent_list, abstract_sent_list, summary_size):
 
 def hashhex(s):
     """Returns a heximal formated SHA1 hash of the input string."""
-    h = hashlib.sha1()
+    h = hashlib.sha1()  # @BUG_HERE_END
     h.update(s.encode('utf-8'))
     return h.hexdigest()
 
