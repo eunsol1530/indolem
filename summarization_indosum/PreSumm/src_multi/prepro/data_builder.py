@@ -20,7 +20,7 @@ from transformers import XLNetTokenizer
 from others.utils import clean
 from prepro.utils import _get_word_ngrams
 
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET  # Use defusedxml for secure XML parsing
 
 nyt_remove_words = ["photo", "graph", "chart", "map", "table", "drawing"]
 
@@ -55,7 +55,7 @@ def load_json(p, lower):
 
 
 def load_xml(p):
-    tree = ET.parse(p)
+    tree = ET.parse(p)  # Secure XML parsing with defusedxml
     root = tree.getroot()
     title, byline, abs, paras = [], [], [], []
     title_node = list(root.iter('hedline'))
@@ -198,8 +198,8 @@ def greedy_selection(doc_sent_list, abstract_sent_list, summary_size):
 
 
 def hashhex(s):
-    """Returns a heximal formated SHA1 hash of the input string."""
-    h = hashlib.sha1()
+    """Returns a heximal formated SHA256 hash of the input string."""
+    h = hashlib.sha256()  # Use SHA256 for secure hashing
     h.update(s.encode('utf-8'))
     return h.hexdigest()
 
